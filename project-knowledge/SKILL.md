@@ -6,7 +6,10 @@ description: >
   and conversation turns. This skill should be used when: (1) starting a new conversation
   on an existing project — to quickly onboard by reading the knowledge base; (2) during
   development — to automatically persist valuable discoveries, decisions, and context;
-  (3) when the user explicitly asks to initialize, read, or update project knowledge.
+  (3) before implementing, debugging, refactoring, or reviewing code in any repository
+  that already contains a `.knowledge/` directory — to proactively cold-start from the
+  existing project context; (4) when the user explicitly asks to initialize, read, or
+  update project knowledge.
   Trigger words include: knowledge, 知识库, onboard, context, 上下文, project-knowledge,
   /knowledge, /init-knowledge.
 ---
@@ -77,6 +80,25 @@ Based on the current task, selectively read deeper files:
 ### Phase 3: Journal Check (Optional)
 
 If recent context is important, read the latest 1-2 journal entries from `journal/`.
+
+## Workflow: Proactive Read Before Coding
+
+When the current repository already contains `.knowledge/` and the task involves writing code,
+debugging, refactoring, review, or design, do not wait for the user to explicitly request
+knowledge reading.
+
+Use this minimum proactive protocol before substantial code work:
+
+1. Read `.knowledge/INDEX.md`
+2. Read `.knowledge/development/current-focus.md`
+3. Then read task-specific files:
+   - Implementing a feature: `architecture/overview.md` + `conventions/coding-style.md`
+   - Debugging or performance tuning: `context/gotchas.md` + `architecture/overview.md`
+   - Reviewing recent work: `development/changelog.md` + latest `journal/` entry if relevant
+4. Briefly summarize the relevant findings to the user before editing code
+
+If `.knowledge/` does not exist, continue normally.
+If the task is trivial and no code changes or technical analysis are involved, this proactive read is optional.
 
 ## Workflow: Writing Knowledge (Auto-Persist)
 
